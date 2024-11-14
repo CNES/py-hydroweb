@@ -1,0 +1,263 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "py-hydroweb"
+version = "1.0.1"
+authors = [
+    {name = "hydroweb.next operational team", email = "exp.hysope2@cnes.fr"},
+]
+maintainers = [
+    {name = "hydroweb.next operational team", email = "exp.hysope2@cnes.fr"},
+]
+description = "Python API to search and download hydrological data from the hydroweb.next catalog"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+license = {text = "Apache 2.0"}
+dependencies = [
+    "requests~=2.32.3",
+    "retry2~=0.9.5",
+    "tqdm~=4.66.5"
+]
+keywords = ["hydroweb", "water", "hydrology", "inland water", "coastal", "scientific data", "search", "download", "catalog", "cnes", "dataterra", "theia"]
+
+[project.urls]
+Home = "https://github.com/CNES/py-hydroweb"
+HydrowebNext = "https://hydroweb.next.theia-land.fr"
+Source = "https://github.com/CNES/py-hydroweb"
+
+[project.optional-dependencies]
+dev = [
+    "coverage==7.0.*",
+    "black==22.12.*",
+    "flake8==5.0.*",
+    "flake8-annotations==2.9.*",
+    "flake8-bandit==4.1.*",
+    "flake8-bugbear==23.1.*",
+    "flake8-eradicate==1.4.*",
+    "flake8-quotes==3.3.*",
+    "flake8-use-fstring==1.4",
+    "isort==5.11.*",
+    "pylint==2.15.*",
+    "pylint-sonarjson==1.0.*",
+    "pytest==7.2.*",
+    "pytest-cov==4.0.*",
+    "pytest-html==3.2.*",
+    "pytest-mock==3.10.*",
+    "cnes-pylint-extension==6.0.0"
+]
+
+[tool.black]
+line-length =  110
+ignore = ['E203', 'E266', 'E501', 'W503', 'ANN101', 'ANN102', 'ANN206']
+max-complexity = 18
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 110
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+log_cli = 1
+log_cli_level = "INFO"
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.coverage.paths]
+source = ["."]
+tests = ["tests", "*/tests"]
+
+[tool.coverage.run]
+branch = true
+include = ["py_hydroweb/*"]
+omit = ["*__main__*", "*__init__*"]
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+
+
+[tool.pylint.main]
+ignore-paths = ["tests"]
+
+fail-under = 10
+
+ignore = ["CVS"]
+
+ignore-patterns = ["^\\.#"]
+jobs = 1
+
+limit-inference-results = 100
+
+load-plugins = ["cnes_checker", "pylint.extensions.check_elif", "pylint.extensions.redefined_variable_type", "pylint.extensions.comparison_placement", "pylint_sonarjson"]
+
+persistent = true
+
+py-version = "3.11"
+
+suggestion-mode = true
+
+[tool.pylint.basic]
+argument-naming-style = "snake_case"
+
+argument-rgx = "[a-z_][a-z0-9_]{2,30}$"
+attr-naming-style = "snake_case"
+attr-rgx = "[a-z_][a-z0-9_]{2,30}$"
+bad-names = ["foo", "bar", "baz", "toto", "tutu", "tata"]
+class-attribute-naming-style = "any"
+class-attribute-rgx = "([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$"
+class-const-naming-style = "UPPER_CASE"
+class-naming-style = "PascalCase"
+class-rgx = "[A-Z_][a-zA-Z0-9]+$"
+const-naming-style = "UPPER_CASE"
+const-rgx = "(([A-Z_][A-Z0-9_]*)|(__.*__))$"
+docstring-min-length = -1
+function-naming-style = "snake_case"
+function-rgx = "[a-z_][a-z0-9_]{2,30}$"
+good-names = ["i", "j", "k", "ex", "Run", "_"]
+inlinevar-naming-style = "any"
+inlinevar-rgx = "[A-Za-z_][A-Za-z0-9_]*$"
+method-naming-style = "snake_case"
+method-rgx = "[a-z_][a-z0-9_]{2,30}$"
+module-naming-style = "snake_case"
+module-rgx = "(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$"
+no-docstring-rgx = "__.*__"
+property-classes = ["abc.abstractproperty"]
+variable-naming-style = "snake_case"
+variable-rgx = "[a-z_][a-z0-9_]{2,30}$"
+
+[tool.pylint.classes]
+defining-attr-methods = ["__init__", "__new__", "setUp"]
+exclude-protected = ["_asdict", "_fields", "_replace", "_source", "_make"]
+valid-classmethod-first-arg = ["cls"]
+valid-metaclass-classmethod-first-arg = ["mcs"]
+
+[tool.pylint.commentmetrics]
+min-func-comments-ratio = 20
+min-func-size-to-check-comments = 10
+min-module-comments-ratio = 20
+
+[tool.pylint.design]
+max-args = 5
+max-attributes = 7
+max-bool-expr = 5
+max-branches = 12
+max-decorators = 5
+max-locals = 15
+max-parents = 7
+max-public-methods = 20
+max-returns = 1
+max-statements = 100
+min-public-methods = 2
+
+[tool.pylint.exceptions]
+overgeneral-exceptions = ["Exception"]
+
+[tool.pylint.format]
+ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
+indent-after-paren = 4
+indent-string = "    "
+max-line-length = 100
+max-module-lines = 1000
+
+[tool.pylint.imports]
+deprecated-modules = ["regsub", "TERMIOS", "Bastion", "rexec"]
+known-third-party = ["enchant"]
+
+[tool.pylint.logging]
+logging-format-style = "old"
+logging-modules = ["logging"]
+
+[tool.pylint.mccabe]
+max-mccabe-number = 25
+max-simplified-mccabe-number = 20
+
+[tool.pylint."messages control"]
+confidence = ["HIGH", "CONTROL_FLOW", "INFERENCE", "INFERENCE_FAILURE", "UNDEFINED"]
+disable = ["raw-checker-failed", "bad-inline-option", "locally-disabled", "file-ignored", "suppressed-message", "useless-suppression", "deprecated-pragma", "use-symbolic-message-instead", "c-extension-no-member", "non-ascii-name", "non-ascii-module-import", "unnecessary-dunder-call", "wrong-spelling-in-comment", "wrong-spelling-in-docstring", "invalid-characters-in-docstring", "consider-using-enumerate", "consider-iterating-dictionary", "consider-using-dict-items", "use-maxsplit-arg", "use-sequence-for-iteration", "consider-using-f-string", "use-implicit-booleaness-not-len", "use-implicit-booleaness-not-comparison", "unnecessary-lambda-assignment", "unnecessary-direct-lambda-call", "line-too-long", "too-many-lines", "trailing-whitespace", "missing-final-newline", "trailing-newlines", "multiple-statements", "superfluous-parens", "mixed-line-endings", "unexpected-line-ending-format", "bad-classmethod-argument", "single-string-used-for-slots", "invalid-name", "disallowed-name", "typevar-name-incorrect-variance", "typevar-double-variance", "typevar-name-mismatch", "empty-docstring", "missing-module-docstring", "singleton-comparison", "unidiomatic-typecheck", "multiple-imports", "useless-import-alias", "import-outside-toplevel", "bad-file-encoding", "useless-option-value", "consider-merging-isinstance", "too-many-nested-blocks", "simplifiable-if-statement", "redefined-argument-from-local", "no-else-return", "consider-using-ternary", "trailing-comma-tuple", "stop-iteration-return", "simplify-boolean-expression", "inconsistent-return-statements", "useless-return", "consider-swap-variables", "consider-using-join", "consider-using-in", "consider-using-get", "chained-comparison", "consider-using-dict-comprehension", "consider-using-set-comprehension", "simplifiable-if-expression", "no-else-raise", "unnecessary-comprehension", "consider-using-sys-exit", "no-else-break", "no-else-continue", "super-with-arguments", "simplifiable-condition", "condition-evals-to-constant", "consider-using-generator", "use-a-generator", "consider-using-min-builtin", "consider-using-max-builtin", "consider-using-with", "unnecessary-dict-index-lookup", "use-list-literal", "use-dict-literal", "unnecessary-list-index-lookup", "too-many-ancestors", "too-many-instance-attributes", "too-few-public-methods", "too-many-public-methods", "too-many-return-statements", "too-many-branches", "too-many-arguments", "too-many-locals", "too-many-boolean-expressions", "no-classmethod-decorator", "useless-object-inheritance", "property-with-parameters", "literal-comparison", "comparison-with-itself", "comparison-of-constants", "duplicate-code", "consider-using-from-import", "os-environ-used", "else-if-used", "unknown-option-value", "non-ascii-file-name", "logging-not-lazy", "logging-format-interpolation", "logging-fstring-interpolation", "modified-iterating-list", "unnecessary-ellipsis", "fixme", "keyword-arg-before-vararg", "arguments-out-of-order", "non-str-assignment-to-dunder-name", "isinstance-second-argument-not-valid-type", "missing-timeout", "useless-with-lock", "unnecessary-semicolon", "bad-indentation", "attribute-defined-outside-init", "bad-staticmethod-argument", "protected-access", "arguments-differ", "signature-differs", "abstract-method", "super-init-not-called", "non-parent-init-called", "invalid-overridden-method", "arguments-renamed", "unused-private-member", "overridden-final-method", "subclassed-final-class", "redefined-slots-in-subclass", "super-without-brackets", "useless-parent-delegation", "useless-else-on-loop", "unreachable", "pointless-statement", "pointless-string-statement", "expression-not-assigned", "unnecessary-lambda", "duplicate-key", "exec-used", "eval-used", "confusing-with-statement", "using-constant-test", "missing-parentheses-for-call-in-test", "self-assigning-variable", "redeclared-assigned-name", "assert-on-string-literal", "duplicate-value", "lost-exception", "assert-on-tuple", "unnecessary-pass", "comparison-with-callable", "nan-comparison", "bad-format-string-key", "unused-format-string-key", "bad-format-string", "missing-format-argument-key", "unused-format-string-argument", "format-combined-specification", "missing-format-attribute", "invalid-format-index", "duplicate-string-formatting-argument", "f-string-without-interpolation", "format-string-without-interpolation", "anomalous-backslash-in-string", "anomalous-unicode-escape-in-string", "implicit-str-concat", "inconsistent-quotes", "redundant-u-string-prefix", "using-f-string-in-unsupported-version", "using-final-decorator-in-unsupported-version", "bad-open-mode", "boolean-datetime", "redundant-unittest-assert", "bad-thread-instantiation", "shallow-copy-environ", "invalid-envvar-default", "subprocess-popen-preexec-fn", "subprocess-run-check", "unspecified-encoding", "forgotten-debug-statement", "method-cache-max-size-none", "deprecated-method", "deprecated-argument", "deprecated-class", "deprecated-decorator", "bare-except", "duplicate-except", "try-except-raise", "raise-missing-from", "binary-op-exception", "raising-format-tuple", "wrong-exception-operation", "wildcard-import", "preferred-module", "misplaced-future", "deprecated-module", "global-variable-undefined", "global-at-module-level", "unused-import", "unused-argument", "unused-wildcard-import", "undefined-loop-variable", "unbalanced-tuple-unpacking", "cell-var-from-loop", "possibly-unused-variable", "self-cls-assignment", "multiple-constructor-doc", "missing-raises-doc", "redundant-returns-doc", "redundant-yields-doc", "missing-return-doc", "missing-return-type-doc", "missing-yield-doc", "missing-yield-type-doc", "missing-param-doc", "missing-type-doc", "differing-param-doc", "differing-type-doc", "useless-param-doc", "useless-type-doc", "missing-any-param-doc", "syntax-error", "unrecognized-inline-option", "bad-configuration-section", "unrecognized-option", "bad-super-call", "logging-unsupported-format", "logging-format-truncated", "logging-too-many-args", "logging-too-few-args", "modified-iterating-dict", "modified-iterating-set", "no-member", "not-callable", "assignment-from-no-return", "no-value-for-parameter", "too-many-function-args", "unexpected-keyword-arg", "redundant-keyword-arg", "missing-kwoa", "invalid-sequence-index", "invalid-slice-index", "assignment-from-none", "not-context-manager", "invalid-unary-operand-type", "unsupported-binary-operation", "repeated-keyword", "unsupported-membership-test", "unsubscriptable-object", "unsupported-assignment-operation", "unsupported-delete-operation", "invalid-metaclass", "dict-iter-missing-items", "await-outside-async", "unhashable-member", "not-an-iterable", "not-a-mapping", "method-hidden", "access-member-before-definition", "no-method-argument", "invalid-slots-object", "assigning-non-slot", "invalid-slots", "inherit-non-class", "inconsistent-mro", "duplicate-bases", "class-variable-slots-conflict", "invalid-class-object", "invalid-enum-extension", "non-iterator-returned", "unexpected-special-method-signature", "invalid-length-returned", "invalid-bool-returned", "invalid-index-returned", "invalid-repr-returned", "invalid-str-returned", "invalid-bytes-returned", "invalid-hash-returned", "invalid-length-hint-returned", "invalid-format-returned", "invalid-getnewargs-returned", "invalid-getnewargs-ex-returned", "init-is-generator", "return-in-init", "function-redefined", "not-in-loop", "return-outside-function", "yield-outside-function", "return-arg-in-generator", "nonexistent-operator", "abstract-class-instantiated", "too-many-star-expressions", "invalid-star-assignment-target", "star-needs-assignment-target", "nonlocal-and-global", "continue-in-finally", "nonlocal-without-binding", "used-prior-global-declaration", "bad-reversed-sequence", "misplaced-format-function", "bad-format-character", "truncated-format-string", "mixed-format-string", "format-needs-mapping", "missing-format-string-key", "too-many-format-args", "too-few-format-args", "bad-string-format-type", "bad-str-strip-call", "invalid-envvar-value", "bad-except-order", "raising-bad-type", "misplaced-bare-raise", "bad-exception-cause", "raising-non-exception", "notimplemented-raised", "catching-non-exception", "yield-inside-async-function", "not-async-context-manager", "import-error", "relative-beyond-top-level", "invalid-unicode-codec", "bidirectional-unicode", "invalid-character-backspace", "invalid-character-carriage-return", "invalid-character-sub", "invalid-character-esc", "invalid-character-nul", "invalid-character-zero-width-space", "undefined-all-variable", "invalid-all-object", "invalid-all-format", "no-name-in-module", "unpacking-non-sequence", "potential-index-error", "fatal", "parse-error", "config-parse-error", "method-check-failed"]
+enable = ["unneeded-not", "bad-mcs-method-argument", "bad-mcs-classmethod-argument", "missing-class-docstring", "missing-function-docstring", "wrong-import-order", "ungrouped-imports", "wrong-import-position", "misplaced-comparison-constant", "too-many-statements", "no-staticmethod-decorator", "cyclic-import", "multiple-exit-statements", "too-many-decorators", "bad-exit-condition", "builtin-name-used", "recursive-call", "use-context-manager", "too-few-comments", "too-high-complexity", "too-high-complexity-simplified", "sys-exit-used", "sys-argv-used", "redefined-variable-type", "dangerous-default-value", "broad-except", "reimported", "import-self", "global-variable-not-assigned", "global-statement", "unused-variable", "redefined-outer-name", "redefined-builtin", "missing-docstring-field", "malformed-docstring-field", "missing-docstring-description", "bad-plugin-value", "no-self-argument", "duplicate-argument-name", "used-before-assignment", "undefined-variable", "astroid-error"]
+
+[tool.pylint.method_args]
+timeout-methods = ["requests.api.delete", "requests.api.get", "requests.api.head", "requests.api.options", "requests.api.patch", "requests.api.post", "requests.api.put", "requests.api.request"]
+
+[tool.pylint.miscellaneous]
+notes = ["FIXME", "XXX", "TODO"]
+
+[tool.pylint.refactoring]
+max-nested-blocks = 7
+never-returning-functions = ["sys.exit", "argparse.parse_error"]
+
+[tool.pylint.reports]
+evaluation = "10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)"
+reports = true
+score = true
+
+[tool.pylint.similarities]
+ignore-comments = true
+ignore-docstrings = true
+ignore-signatures = true
+min-similarity-lines = 4
+
+[tool.pylint."sonarqube json output"]
+halt-on-invalid-sonar-rules = true
+sonar-default-effort = 5
+sonar-default-severity = "MINOR"
+sonar-default-type = "CODE_SMELL"
+sonar-rules = ["C0113:MINOR:10:CODE_SMELL", "C0203:MINOR:10:CODE_SMELL", "C0204:MINOR:10:CODE_SMELL", "C0411:MINOR:10:CODE_SMELL", "C0412:MINOR:10:CODE_SMELL", "C0413:MINOR:10:CODE_SMELL", "E0108:MINOR:10:CODE_SMELL", "E0213:MAJOR:10:CODE_SMELL", "E0601:MAJOR:10:CODE_SMELL", "E0602:MAJOR:10:CODE_SMELL", "F0002:MAJOR:10:CODE_SMELL", "R0203:MINOR:10:CODE_SMELL", "R0401:MINOR:10:CODE_SMELL", "R0915:MINOR:10:CODE_SMELL", "R5101:CRITICAL:10:CODE_SMELL", "R5102:CRITICAL:10:CODE_SMELL", "R5103:CRITICAL:10:CODE_SMELL", "R5104:CRITICAL:10:CODE_SMELL", "R5105:CRITICAL:10:CODE_SMELL", "R5106:CRITICAL:10:CODE_SMELL", "R5201:CRITICAL:10:CODE_SMELL", "R5301:CRITICAL:10:CODE_SMELL", "R5302:CRITICAL:10:CODE_SMELL", "R5401:BLOCKER:10:CODE_SMELL", "R5402:BLOCKER:10:CODE_SMELL", "R5403:BLOCKER:10:CODE_SMELL", "W0102:MINOR:10:CODE_SMELL", "W0404:MINOR:10:CODE_SMELL", "W0406:MINOR:10:CODE_SMELL", "W0602:MINOR:10:CODE_SMELL", "W0603:MINOR:10:CODE_SMELL", "W0612:MINOR:10:CODE_SMELL", "W0621:MINOR:10:CODE_SMELL", "W0622:MINOR:10:CODE_SMELL", "W0703:MINOR:10:CODE_SMELL", "W9095:CRITICAL:10:CODE_SMELL", "W9096:CRITICAL:10:CODE_SMELL", "W9097:CRITICAL:10:CODE_SMELL", "C2201:MINOR:2:CODE_SMELL", "R0204:MAJOR:15:CODE_SMELL"]
+
+[tool.pylint.spelling]
+max-spelling-suggestions = 4
+spelling-ignore-comment-directives = "fmt: on,fmt: off,noqa:,noqa,nosec,isort:skip,mypy:"
+
+[tool.pylint.sphinxdoc]
+
+accept-no-raise-doc = true
+accept-no-return-doc = true
+accept-no-yields-doc = true
+default-docstring-type = "default"
+
+[tool.pylint.string]
+
+[tool.pylint.typecheck]
+contextmanager-decorators = ["contextlib.contextmanager"]
+generated-members = "REQUEST,acl_users,aq_parent"
+ignore-none = true
+ignore-on-opaque-inference = true
+ignored-checks-for-mixins = ["no-member", "not-async-context-manager", "not-context-manager", "attribute-defined-outside-init"]
+ignored-classes = ["SQLObject"]
+missing-member-hint = true
+missing-member-hint-distance = 1
+missing-member-max-choices = 1
+mixin-class-rgx = ".*[Mm]ixin"
+
+[tool.pylint.variables]
+allow-global-unused-variables = true
+callbacks = ["cb_", "_cb"]
+dummy-variables-rgx = "_$|dummy"
+ignored-argument-names = "_.*"
+redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", "builtins", "io"]
+
+

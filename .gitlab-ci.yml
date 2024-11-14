@@ -1,0 +1,12 @@
+
+variables:
+  SONAR_PROJECT_GROUP: "hygor"
+  SONAR_SOURCES: py_hydroweb
+  PUBLISH_TO_PIP_ARTIFACTORY: "false"
+  PREVENT_PUBLISH_ON_DOCKER: "true"
+
+
+include: 
+  - project: 'hysope2/devops/ci/templates'
+    ref: master
+    file: BuildPythonImage.gitlab-ci.yml

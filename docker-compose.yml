@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  py_hydroweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/app:cached
+      - bash-history:/command-history
+      - vscode-server:/home/user/.vscode-server
+      - type: tmpfs
+        target: /tmp
+    tty: true
+    network_mode: "host"
+
+volumes:
+  bash-history:
+  vscode-server:
