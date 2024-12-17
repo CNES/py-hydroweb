@@ -121,8 +121,9 @@ class Client:
             DownloadInfo.Status.CREATED,
             DownloadInfo.Status.RUNNING,
         ]:
-            progress_bar.update(info.progress - previous_progress)
-            previous_progress = info.progress
+            if info.progress:
+                progress_bar.update(info.progress - previous_progress)
+                previous_progress = info.progress
             sleep(10)
             info = self.get_download_info(download_id)
         progress_bar.update(100 - previous_progress)
