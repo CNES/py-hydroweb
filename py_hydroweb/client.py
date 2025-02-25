@@ -77,7 +77,7 @@ class Client:
     @retry(**retry_policy)
     def get_downloads_info(
         self, last_update: date = None, page: int = None, size: int = None
-    ) -> dict:  # dict[str, DownloadInfo]
+    ) -> dict:
         """Gets download status for all download requests having a last update after given input date
         Return type is a map worklow_id -> status
         """

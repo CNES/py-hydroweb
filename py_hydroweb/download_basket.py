@@ -13,7 +13,7 @@ class DownloadBasket:
     download_name: str
 
     # Map of collections indexed by (collection_id, correlation_id) tuple
-    collections: dict  # dict[str, dict[str, Collection]]
+    collections: dict
 
     def __init__(
         self,
