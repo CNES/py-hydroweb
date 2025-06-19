@@ -68,3 +68,16 @@ USER user
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
 CMD ["bash"]
+
+# ----------------------------
+# IMAGE PUBLICATION (Define and copy files for publication)
+FROM artifactory.cnes.fr/hysope2-docker/hys2/python-slim:3.8-slim-publier AS publication
+
+USER 0
+
+ARG TWINE_REPOSITORY_URL
+ARG TWINE_CERT=/etc/ssl/certs/ca-certificates.trust.crt
+
+COPY py_hydroweb/ py_hydroweb/
+COPY pyproject.toml pyproject.toml
+COPY README.md README.md

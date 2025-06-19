@@ -2,9 +2,22 @@
 variables:
   SONAR_PROJECT_GROUP: "hygor"
   SONAR_SOURCES: py_hydroweb
-  PUBLISH_TO_PIP_ARTIFACTORY: "false"
+  PUBLISH_TO_PIP_ARTIFACTORY: "true"
   PREVENT_PUBLISH_ON_DOCKER: "true"
 
+# Enable publication for all branches unless tag
+# Overrides rules of docker-build-publish and docker-publish
+# (To Avoid conflict between pypi and artifactory versions)
+docker-build-publish:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
+      when: on_success
+    - when: never
+docker-publish:
+  rules:
+    - if: '$CI_COMMIT_TAG == null'
+      when: on_success
+    - when: never
 
 include: 
   - project: 'hysope2/devops/ci/templates'
