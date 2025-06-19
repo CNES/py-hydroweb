@@ -42,7 +42,7 @@ RUN --mount=type=secret,id=secret \
     pip install --upgrade pip ; \
     pip install .[dev] ;
 
-COPY --from=artifactory.cnes.fr/hysope2-docker/hys2/dockerfile-custom-stages:v10 python-ci-env-stage/Makefile Makefile
+COPY --from=artifactory.cnes.fr/hysope2-docker/hys2/dockerfile-custom-stages:latest python-ci-env-stage/Makefile Makefile
 
 ENTRYPOINT []
 
@@ -54,7 +54,7 @@ ENV MODULES_DIRECTORIES="py_hydroweb"
 
 USER 0
 
-COPY --from=artifactory.cnes.fr/hysope2-docker/hys2/dockerfile-custom-stages:v10 python-dev-env-stage/ /tmp/
+COPY --from=artifactory.cnes.fr/hysope2-docker/hys2/dockerfile-custom-stages:latest python-dev-env-stage/ /tmp/
 
 RUN --mount=type=secret,id=secret \
     --mount=type=cache,target=/var/cache/apt \

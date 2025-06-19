@@ -9,7 +9,7 @@ For more information about the platform, to create an account and an API key, vi
 
 ```python
 >>> import py_hydroweb
->>> client = py_hydroweb.Client("<my_personal_hydroweb_api_key>")
+>>> client = py_hydroweb.Client(api_key="<my_personal_hydroweb_api_key>")
 >>> basket = py_hydroweb.DownloadBasket("my_download_basket")
 >>> basket.add_collection("HYDROWEB_LAKES_OPE", bbox=[17.6123, 4.53676, 54.7998, 18.04142])
 >>> client.submit_and_download_zip(basket)
@@ -200,4 +200,3 @@ You can also clean it manually provided that status is no longer CREATED nor RUN
 
 delete_download method parameters:
 - `download_id: str` (mandatory) The identifier of the download request to be removed
-

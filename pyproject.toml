@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-hydroweb"
-version = "1.0.2"
+version = "1.1.0"
 authors = [
     {name = "hydroweb.next operational team", email = "exp.hysope2@cnes.fr"},
 ]

@@ -144,3 +144,5 @@ Makefile
 secret.txt
 *.zip
 script_template.py
+tmp/
+reports/

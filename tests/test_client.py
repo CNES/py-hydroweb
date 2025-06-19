@@ -2,6 +2,7 @@
 
 import logging
 import os
+import re
 from datetime import datetime
 from unittest.mock import patch
 
@@ -124,12 +125,31 @@ class TestClient:
             "workflowId": self.DOWNLOAD_ID,
             "status": "RUNNING",
             "progress": 17,
+            "message": "Message Random",
         }
 
         infos: py_hydroweb.DownloadInfo = self.client.get_download_info(self.DOWNLOAD_ID)
         assert infos.download_id == self.DOWNLOAD_ID
         assert infos.progress == 17
         assert infos.status == py_hydroweb.DownloadInfo.Status.RUNNING
+        assert infos.message == "Message Random"
+
+        mock.assert_called_once_with(expected_url, headers=self.EXPECTED_HEADERS)
+
+    @patch("requests.get")
+    def test_get_download_info_created(self, mock):
+
+        # Expected API call
+        expected_url: str = f"https://test/api/download/workflows/{self.DOWNLOAD_ID}/status"
+
+        # Mocked return value
+        mock.return_value.json.return_value = {"workflowId": self.DOWNLOAD_ID, "status": "CREATED"}
+
+        infos: py_hydroweb.DownloadInfo = self.client.get_download_info(self.DOWNLOAD_ID)
+        assert infos.download_id == self.DOWNLOAD_ID
+        assert infos.progress is None
+        assert infos.status == py_hydroweb.DownloadInfo.Status.CREATED
+        assert infos.message is None
 
         mock.assert_called_once_with(expected_url, headers=self.EXPECTED_HEADERS)
 
@@ -249,13 +269,48 @@ class TestClient:
         mock__get_zip.assert_called_once_with(self.DOWNLOAD_ID, None, None)
 
     @patch("py_hydroweb.client.Client.get_download_info")
-    def test_download_zip_failed(self, mock_get_download_info):
+    def test_download_zip_failed_with_message(self, mock_get_download_info, caplog):
+
+        # Get error log to verify
+        caplog.set_level(logging.ERROR)
+
         # Mocked return value
         mock_get_download_info.return_value.status = py_hydroweb.DownloadInfo.Status.FAILED
+        mock_get_download_info.return_value.status = (
+            "Un jour, Chuck Norris a commandé un Big Mac chez Quick. Il l'a obtenu..."
+        )
 
+        # Check mock calls
         assert self.client.download_zip(self.DOWNLOAD_ID) is None
-
         mock_get_download_info.assert_called_once_with(self.DOWNLOAD_ID)
+
+        # Check error log
+        # (use regex as the message appears as a MagicMock object)
+        assert re.match(
+            "Download preparation did not complete successfully, the following error was emitted:\n'.+'\nPlease fix your request or else contact hydroweb.next support team.",
+            caplog.messages[0],
+        )
+
+    @patch("py_hydroweb.client.Client.get_download_info")
+    def test_download_zip_failed_without_message(self, mock_get_download_info, caplog):
+
+        # Get error log to verify
+        caplog.set_level(logging.ERROR)
+
+        # Mocked return value
+        # Muste define message to None unless the value is considered as a mock object
+        mock_get_download_info.return_value.status = py_hydroweb.DownloadInfo.Status.FAILED
+        mock_get_download_info.return_value.message = None
+
+        # Check mock calls
+        assert self.client.download_zip(self.DOWNLOAD_ID) is None
+        mock_get_download_info.assert_called_once_with(self.DOWNLOAD_ID)
+
+        # Check error log
+        assert (
+            caplog.messages[0]
+            == "Download preparation did not complete successfully, please try again later or else contact hydroweb.next support team."
+        )
 
     @patch("py_hydroweb.client.Client.submit_download")
     @patch("py_hydroweb.client.Client.download_zip")

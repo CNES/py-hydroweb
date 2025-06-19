@@ -70,14 +70,14 @@ class Client:
             status: str = body["status"]
             # Progress is optional
             progress: int = body.get("progress")
-            return DownloadInfo(download_id, status, progress)
+            # Message is optional (failure case)
+            message: str = body.get("message")
+            return DownloadInfo(download_id, status, progress, message)
 
         raise ApiErrorException(url, resp.status_code, resp.json() if resp else "unknown")
 
     @retry(**retry_policy)
-    def get_downloads_info(
-        self, last_update: date = None, page: int = None, size: int = None
-    ) -> dict:
+    def get_downloads_info(self, last_update: date = None, page: int = None, size: int = None) -> dict:
         """Gets download status for all download requests having a last update after given input date
         Return type is a map worklow_id -> status
         """
@@ -130,9 +130,17 @@ class Client:
         progress_bar.close()
 
         if info.status != DownloadInfo.Status.COMPLETED:
-            LOGGER.error(
-                "Download preparation did not complete successfully, please try again later or else contact hydroweb.next support team."
-            )
+            # Usually, download status endpoint return an error message
+            # To display if accessible
+            error_msg: str = "Download preparation did not complete successfully"
+            if info.message:
+                error_msg = (
+                    f"{error_msg}, the following error was emitted:\n'{info.message}'\n"
+                    "Please fix your request or else contact hydroweb.next support team."
+                )
+            else:
+                error_msg = f"{error_msg}, please try again later or else contact hydroweb.next support team."
+            LOGGER.error(error_msg)
             return None
 
         LOGGER.info("Download is ready!")
