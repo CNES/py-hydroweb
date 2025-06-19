@@ -260,4 +260,9 @@ dummy-variables-rgx = "_$|dummy"
 ignored-argument-names = "_.*"
 redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", "builtins", "io"]
 
+[tool.setuptools.packages.find]
+where = ["."]  # list of folders that contain the packages (["."] by default)
+include = ["py_hydroweb"]  # package names should match these glob patterns (["*"] by default)
+exclude = []  # exclude packages matching these glob patterns (empty by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
