@@ -1,5 +1,9 @@
 # © CNES
 
+"""
+DownloadBasket class
+"""
+
 from typing import List
 
 from py_hydroweb.collection import Collection

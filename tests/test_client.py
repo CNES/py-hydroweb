@@ -159,7 +159,9 @@ class TestClient:
         last_update: datetime = datetime.fromisoformat("2022-10-22")
 
         # Expected API call
-        expected_url: str = "https://test/api/download/workflows?sort=lastUpdate,DESC&lastUpdate=2022-10-22T00:00:00Z&unpaged=true"
+        expected_url: str = (
+            "https://test/api/download/workflows?sort=lastUpdate,DESC&lastUpdate=2022-10-22T00:00:00Z&unpaged=true"
+        )
 
         # Mocked return value
         mock.return_value.json.return_value = {

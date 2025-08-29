@@ -1,5 +1,9 @@
 # © CNES
 
+"""
+Specific exception classes
+"""
+
 
 class CollectionUnicityException(Exception):
     """Raised when trying to add an already existing (collection id, correlation id) to a download basket"""

@@ -1,5 +1,9 @@
 # © CNES
 
+"""
+Hydroweb Client class
+"""
+
 import logging
 import os
 import re

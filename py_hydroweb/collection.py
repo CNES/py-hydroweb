@@ -1,5 +1,9 @@
 # © CNES
 
+"""
+Collection data class
+"""
+
 from dataclasses import dataclass
 from typing import List
 
