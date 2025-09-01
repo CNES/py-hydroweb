@@ -200,3 +200,13 @@ You can also clean it manually provided that status is no longer CREATED nor RUN
 
 delete_download method parameters:
 - `download_id: str` (mandatory) The identifier of the download request to be removed
+
+## Troubleshooting
+
+### Error code
+
+In case of an error during the downloading process, a specific message and an error code are included in the download information payload.
+- `UNEXPECTED_ERROR` : Please contact support team to handle this unexpected issue.
+- `EMPTY_SELECTION` : Your basket does not contain any data.
+- `WHOLE_QUOTA_EXCEEDED` : The total size of the files to download exceeds the whole quota.
+- `BLOCKED_WORKFLOWS_LIMIT_REACHED` : Total blocked workflows exceeds the maximum allowed.
