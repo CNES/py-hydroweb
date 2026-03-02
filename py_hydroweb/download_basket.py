@@ -34,6 +34,7 @@ class DownloadBasket:
         folder: str = None,
         bbox: List[float] = None,
         intersects: dict = None,
+        intersects_refs: List[str] = None,
         datetime: str = None,
         query: dict = None,
     ):
@@ -63,7 +64,7 @@ class DownloadBasket:
 
         # We add this collection to this basket
         new_collection: Collection = Collection(
-            collection_id, correlation_id, folder, bbox, intersects, datetime, query
+            collection_id, correlation_id, folder, bbox, intersects, intersects_refs, datetime, query
         )
         if collection_id in self.collections:
             self.collections[collection_id][correlation_id] = new_collection

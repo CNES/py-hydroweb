@@ -24,7 +24,13 @@ class TestDownloadBasket:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 }
             ],
         }
@@ -40,13 +46,25 @@ class TestDownloadBasket:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "product-2",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
             ],
         }
@@ -62,19 +80,37 @@ class TestDownloadBasket:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "product-2",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "product-3",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
             ],
         }
@@ -93,7 +129,13 @@ class TestDownloadBasket:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "HYDROWEB_LAKES_RESEARCH",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 }
             ],
         }
@@ -109,13 +151,25 @@ class TestDownloadBasket:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "product-1",  # correlationId has been modified automatically
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "product-2",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
             ],
         }

@@ -32,6 +32,10 @@ class Collection:
     # e.g. {"type":"Polygon","coordinates":[[[6,53],[7,53],[7,54],[6,54],[6,53]]]}
     intersects: dict = None
 
+    # (optional) List of references to other geometries to perform intersection with
+    # e.g. ["collection1.shape1", "collection2.shape2"]
+    intersects_refs: List[str] = None
+
     # (optional) Single date+time, or a range ('/' separator), formatted to RFC 3339, section 5.6. Use double dots .. for open date ranges.
     # Warning: it refers to the *ingestion* datetime of the data in the catalog
     # e.g. "2019-01-01T00:00:00Z/2019-01-01T23:59:59Z"
@@ -51,6 +55,7 @@ class Collection:
             "filters": {
                 "bbox": self.bbox,
                 "intersects": self.intersects,
+                "intersectsRefs": self.intersects_refs,
                 "datetime": self.datetime,
                 "query": self.query,
             },

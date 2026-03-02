@@ -32,6 +32,9 @@ class TestClient:
             bbox=[17.6123, 4.53676, 54.7998, 18.04142],
         )
         self.basket.add_collection(
+            "HYDROWEB_LAKES_OPE", correlation_id="HYDROWEB_LAKES_OPE_2", intersects_refs=["countries.France"]
+        )
+        self.basket.add_collection(
             "LIS_SNT_YEARLY",
             correlation_id="LIS_SNT_YEARLY",
             folder="lis/snt/",
@@ -62,7 +65,13 @@ class TestClient:
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "HYDROWEB_LAKES_RESEARCH",
                     "folder": None,
-                    "filters": {"bbox": None, "intersects": None, "datetime": None, "query": None},
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_OPE",
@@ -71,6 +80,19 @@ class TestClient:
                     "filters": {
                         "bbox": [17.6123, 4.53676, 54.7998, 18.04142],
                         "intersects": None,
+                        "intersectsRefs": None,
+                        "datetime": None,
+                        "query": None,
+                    },
+                },
+                {
+                    "collectionId": "HYDROWEB_LAKES_OPE",
+                    "correlationId": "HYDROWEB_LAKES_OPE_2",
+                    "folder": None,
+                    "filters": {
+                        "bbox": None,
+                        "intersects": None,
+                        "intersectsRefs": ["countries.France"],
                         "datetime": None,
                         "query": None,
                     },
@@ -93,6 +115,7 @@ class TestClient:
                             ],
                             "type": "Polygon",
                         },
+                        "intersectsRefs": None,
                         "datetime": "2022-01-01T00:00:00Z/2022-12-31T23:59:59Z",
                         "query": {
                             "start_datetime": {"lte": "2024-02-03T00:00:00.000Z"},
