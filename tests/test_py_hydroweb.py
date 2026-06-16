@@ -49,6 +49,7 @@ class TestPyHydroweb:
                 ],
                 "type": "Polygon",
             },
+            intersects_refs=["NATURAL_EARTH_COUNTRIES.Sudan"],
             datetime="2022-01-01T00:00:00Z/2022-12-31T23:59:59Z",
             query={
                 "start_datetime": {"lte": "2024-02-03T00:00:00.000Z"},

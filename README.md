@@ -74,6 +74,7 @@ DownloadBasket's constructor parameters:
             ],
             "type": "Polygon",
         },
+        intersects_refs=["NATURAL_EARTH_COUNTRIES.Sudan"],
         datetime="2022-01-01T00:00:00Z/2022-12-31T23:59:59Z",
         query={
             "start_datetime": {"lte": "2024-02-03T00:00:00.000Z"},
@@ -90,6 +91,26 @@ add_collection method parameters:
     - for more information see [here](https://github.com/radiantearth/stac-api-spec/blob/release/v1.0.0/item-search/README.md)
 - `intersects: dict = None` (optional) Geojson geometry to search for items by performing intersection between their own geometry and this geometry 
     - for more information see [here](https://github.com/radiantearth/stac-api-spec/blob/release/v1.0.0/item-search/README.md)
+- `intersects_refs: List[str] = None` (optional) List of toponyms (aliases) to search for items by performing intersection between their own geometry and this geometry  
+    - toponyms are feature identifiers that are drawn from a predefined set of collections 
+    - to discover them, you can use the `Where` search bar on [hydroweb-next](https://hydroweb.next.theia-land.fr)
+    - non-exhaustive list of examples:
+        - NATURAL_EARTH_COUNTRIES.France
+        - HYDRO_BASINS_03.456
+        - HYDRO_BASINS_04.4561
+        - HYDRO_BASINS_05.45610
+        - HYDRO_BASINS_06.456100
+        - S2_TILES_MASK.32TMN
+        - HYDROWEB_LAKES_OPE.L_leman
+        - HYDROWEB_LAKES_RESEARCH.L_lagullinas
+        - HYDROWEB_RIVERS_OPE.R_GARONNE_GARONNE_KM0191
+        - HYDROWEB_RIVERS_RESEARCH.R_GARONNE_GARONNE_KM0164
+        - SWOT_PRIOR_LAKE_DATABASE.2160028212
+        - SWOT_PRIOR_RIVER_DATABASE.23214400101
+        - SWOT_L2_HRMASK_SCENES_NOM.456_002F
+        - SWOT_L2_HRMASK_TILES_NOM.001_095L
+        - HUBEAU_HYDROMETRIE.1232000101
+        - S3_LPP_LAKE_WATER_LEVEL.L_1230001592_S3A_554
 - `datetime: str = None` (optional) Single date+time, or a range ('/' separator) 
     - for more information see [here](https://github.com/radiantearth/stac-api-spec/blob/release/v1.0.0/item-search/README.md)
     - **warning**: this parameter refers to the **ingestion** datetime of the data in the catalog and should generally not be used. If you want to refer to product date and time, use the `query` parameter below
