@@ -2,7 +2,7 @@
 
 **py_hydroweb** is a simple library providing python facilities to search and download hydrological data from the [hydroweb.next](https://hydroweb.next.theia-land.fr) platform.
 
-[![hydroweb.next](https://hydroweb.next.theia-land.fr/auth/resources/n5ga4/login/theme-hnext/img/hydrowebnext_full.svg)](https://hydroweb.next.theia-land.fr)
+[![hydroweb.next](https://raw.githubusercontent.com/CNES/py-hydroweb/main/ressources/opengraph-image.jpg)](https://hydroweb.next.theia-land.fr)
 
 For more information about the platform, to create an account and an API key, visit our website at https://hydroweb.next.theia-land.fr.
 
@@ -85,8 +85,15 @@ DownloadBasket's constructor parameters:
 
 add_collection method parameters:
 - `collection_id: str` (mandatory) Collection identifier (as specified by hydroweb.next platform, browse [here](https://radiantearth.github.io/stac-browser/#/external/hydroweb.next.theia-land.fr/api/catalog/stac) to discover available collection ids)
-- `correlation_id: str = None` (optional) Correlation identifier (in case we find several time the same collection ID in the same download basket)
-- `folder: str = None` (optional) Desired folder subpath in the resulting zip to be downloaded
+- `correlation_id: str = None` (optional) Correlation identifier (in case we find several time the same collection ID in the download basket). If not provided, it defaults to *COLLECTION_ID* for first occurrence of given collection, then *COLLECTION_ID_2*, ..., *COLLECTION_ID_N*.
+- `folder: str = None` (optional) Desired folder subpath in the resulting zip to be downloaded. If not provided, zip structure defaults as follow:
+    - For a single occurence of a collection in basket: *COLLECTION_ID/...*
+    - For several occurences in basket: *COLLECTION_ID/CORRELATION_ID/...* 
+        - with *CORRELATION_ID* itself defaulting to *COLLECTION_ID_N* if not provided, leading to a final default structure like:
+            - *COLLECTION_ID/COLLECTION_ID/...*
+            - *COLLECTION_ID/COLLECTION_ID_2/...*
+            - *...*
+            - *COLLECTION_ID/COLLECTION_ID_N/...*
 - `bbox: List[float] = None` (optional) Geographical bounding box
     - for more information see [here](https://github.com/radiantearth/stac-api-spec/blob/release/v1.0.0/item-search/README.md)
 - `intersects: dict = None` (optional) Geojson geometry to search for items by performing intersection between their own geometry and this geometry 

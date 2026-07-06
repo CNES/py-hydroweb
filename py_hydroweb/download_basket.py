@@ -40,21 +40,30 @@ class DownloadBasket:
     ):
         """Add a collection to a download basket"""
 
-        # If no correlation identifier was given, we will have 3 cases:
-        # - First product for this collection: correlation_id is simply equal to collection_id
-        # - Second product for this collection: we rename the first correlation_id into product-1 and second will be product-2
-        # - More than second product for this collection: we create a product-N correlation_id
-        if not correlation_id:
-            current_count = len(self.collections.get(collection_id, {}))
-            if current_count == 0:
-                correlation_id = collection_id
-            else:
-                if current_count == 1 and collection_id in self.collections[collection_id]:
-                    # Rename the correlation id of the first element of this collection
-                    first_collection: Collection = self.collections[collection_id].pop(collection_id)
-                    first_collection.correlation_id = "product-1"
-                    self.collections[collection_id][first_collection.correlation_id] = first_collection
-                correlation_id = f"product-{current_count+1}"
+        # Count number of occurrences for this collection
+        current_count = len(self.collections.get(collection_id, {}))
+
+        # Unless "folders" are explicitely provided, zip content will be organized as follow:
+        # For one occurence of a collection: COLLECTION_ID/<data>
+        # For several occurences: COLLECTION_ID/CORRELLATION_ID/<data_1>
+        #                         COLLECTION_ID/CORRELLATION_ID_2/<data_2>
+        #                         ...
+        #                         COLLECTION_ID/CORRELLATION_ID_N/<data_3>
+        # with correlation ids themselves defaulting to collection ids is not provided
+        if current_count == 0:
+            # First occurrence for this collection: correlation id and folder default to collection id (unless provided)
+            correlation_id = correlation_id if correlation_id else collection_id
+            folder = folder if folder else collection_id
+        else:
+            # 2nd or more occurrence for this collection
+            if current_count == 1:
+                # 2nd occurrence for this collection: adapt the folder of the first occurrence
+                first_collection = next(iter(self.collections[collection_id].values()))
+                if first_collection.folder == collection_id:
+                    first_collection.folder = f"{collection_id}/{first_collection.correlation_id}"
+            # general case for a multi-occurrence collection
+            correlation_id = correlation_id if correlation_id else f"{collection_id}_{current_count+1}"
+            folder = folder if folder else f"{collection_id}/{correlation_id}"
 
         # If the (collection id, correlation id) entry already exists, raise an error
         if collection_id in self.collections and correlation_id in self.collections[collection_id]:

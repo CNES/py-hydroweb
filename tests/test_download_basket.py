@@ -23,7 +23,7 @@ class TestDownloadBasket:
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_RESEARCH",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -45,7 +45,7 @@ class TestDownloadBasket:
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_RESEARCH/my awesome correlation id",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -56,8 +56,8 @@ class TestDownloadBasket:
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
-                    "correlationId": "product-2",
-                    "folder": None,
+                    "correlationId": "HYDROWEB_LAKES_RESEARCH_2",
+                    "folder": "HYDROWEB_LAKES_RESEARCH/HYDROWEB_LAKES_RESEARCH_2",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -79,7 +79,7 @@ class TestDownloadBasket:
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "my awesome correlation id",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_RESEARCH/my awesome correlation id",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -90,8 +90,8 @@ class TestDownloadBasket:
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
-                    "correlationId": "product-2",
-                    "folder": None,
+                    "correlationId": "HYDROWEB_LAKES_RESEARCH_2",
+                    "folder": "HYDROWEB_LAKES_RESEARCH/HYDROWEB_LAKES_RESEARCH_2",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -102,8 +102,8 @@ class TestDownloadBasket:
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
-                    "correlationId": "product-3",
-                    "folder": None,
+                    "correlationId": "HYDROWEB_LAKES_RESEARCH_3",
+                    "folder": "HYDROWEB_LAKES_RESEARCH/HYDROWEB_LAKES_RESEARCH_3",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -128,7 +128,7 @@ class TestDownloadBasket:
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "HYDROWEB_LAKES_RESEARCH",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_RESEARCH",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -149,8 +149,8 @@ class TestDownloadBasket:
             "collections": [
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
-                    "correlationId": "product-1",  # correlationId has been modified automatically
-                    "folder": None,
+                    "correlationId": "HYDROWEB_LAKES_RESEARCH",
+                    "folder": "HYDROWEB_LAKES_RESEARCH/HYDROWEB_LAKES_RESEARCH",  # folder has been modified automatically
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -161,8 +161,8 @@ class TestDownloadBasket:
                 },
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
-                    "correlationId": "product-2",
-                    "folder": None,
+                    "correlationId": "HYDROWEB_LAKES_RESEARCH_2",
+                    "folder": "HYDROWEB_LAKES_RESEARCH/HYDROWEB_LAKES_RESEARCH_2",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -176,4 +176,4 @@ class TestDownloadBasket:
 
         # Add a (collection id, correlation id) tuple that already exists
         with raises(CollectionUnicityException):
-            basket.add_collection("HYDROWEB_LAKES_RESEARCH", "product-2")
+            basket.add_collection("HYDROWEB_LAKES_RESEARCH", "HYDROWEB_LAKES_RESEARCH_2")

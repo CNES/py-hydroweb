@@ -64,7 +64,7 @@ class TestClient:
                 {
                     "collectionId": "HYDROWEB_LAKES_RESEARCH",
                     "correlationId": "HYDROWEB_LAKES_RESEARCH",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_RESEARCH",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
@@ -76,7 +76,7 @@ class TestClient:
                 {
                     "collectionId": "HYDROWEB_LAKES_OPE",
                     "correlationId": "HYDROWEB_LAKES_OPE",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_OPE/HYDROWEB_LAKES_OPE",
                     "filters": {
                         "bbox": [17.6123, 4.53676, 54.7998, 18.04142],
                         "intersects": None,
@@ -88,7 +88,7 @@ class TestClient:
                 {
                     "collectionId": "HYDROWEB_LAKES_OPE",
                     "correlationId": "HYDROWEB_LAKES_OPE_2",
-                    "folder": None,
+                    "folder": "HYDROWEB_LAKES_OPE/HYDROWEB_LAKES_OPE_2",
                     "filters": {
                         "bbox": None,
                         "intersects": None,
