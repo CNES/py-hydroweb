@@ -259,6 +259,17 @@ class TestClient:
 
         mock.assert_called_once_with(expected_url, headers=self.EXPECTED_HEADERS, stream=True)
 
+    @patch("requests.get")
+    def test__get_zip_bad_filename(self, mock):
+        # Mocked return value WITH A PATH IN CONTENT-DISPOSITION
+        mock.return_value.__enter__.return_value.content = b"54sdF4G5vd2dRREZdsxv55v9ssfbpDKopj"
+        mock.return_value.__enter__.return_value.headers = {
+            "content-disposition": f"attachment; filename=../{self.DOWNLOAD_ID}.zip"
+        }
+
+        with pytest.raises(py_hydroweb.exceptions.OutputFilePathException):
+            self.client._get_zip(self.DOWNLOAD_ID, output_folder="/app/tests/output/")
+
     @patch("requests.delete")
     def test_delete_download_OK(self, mock):
 
@@ -348,3 +359,22 @@ class TestClient:
 
         mock_submit_download.assert_called_once_with(self.basket)
         mock_download_zip.assert_called_once_with(self.DOWNLOAD_ID, "test.zip", "output")
+
+    def test__get_attachment_name(self):
+        # Nominal case
+        headers = {"content-disposition": "filename=a_filename.zip"}
+        assert self.client._get_attachment_name(headers) == "a_filename.zip"
+
+        # Error case since filename must be a zip
+        headers = {"content-disposition": "filename=a_filename"}
+        with pytest.raises(py_hydroweb.exceptions.OutputFilePathException):
+            self.client._get_attachment_name(headers)
+
+        # 2 more error cases since filename cannot be a path
+        headers = {"content-disposition": "filename=/a/path/to/a_filename.zip"}
+        with pytest.raises(py_hydroweb.exceptions.OutputFilePathException):
+            self.client._get_attachment_name(headers)
+
+        headers = {"content-disposition": "filename=../a/path/to/a_filename.zip"}
+        with pytest.raises(py_hydroweb.exceptions.OutputFilePathException):
+            self.client._get_attachment_name(headers)

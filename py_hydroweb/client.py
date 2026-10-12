@@ -8,6 +8,7 @@ import logging
 import os
 import re
 from datetime import date
+from pathlib import PurePosixPath, PureWindowsPath
 from time import sleep
 
 import requests
@@ -16,7 +17,7 @@ from tqdm import tqdm
 
 from py_hydroweb.download_basket import DownloadBasket
 from py_hydroweb.download_info import DownloadInfo
-from py_hydroweb.exceptions import ApiErrorException, MissingApiKeyException, NonexistentFolderException
+from py_hydroweb.exceptions import ApiErrorException, MissingApiKeyException, OutputFilePathException
 
 LOGGER = logging.getLogger(__name__)
 
@@ -171,15 +172,27 @@ class Client:
     def _get_zip(self, download_id: str, zip_filename: str = None, output_folder: str = None) -> str:
         """Downloads given download_id (warning: download request must be ready) and return file path"""
         if output_folder and not os.path.exists(output_folder):
-            raise NonexistentFolderException(f"Output folder {output_folder} must exist!")
+            raise OutputFilePathException(f"Output folder {output_folder} must exist!")
 
         url: str = f"{self.hydroweb_api_url}/download/workflows/{download_id}/zip"
 
         try:
             with requests.get(url, headers=self.headers, stream=True) as resp:
                 resp.raise_for_status()
+
                 # If zip_filename was not defined, we must look for attachment name in the headers that the API has returned to us
                 output_file: str = zip_filename if zip_filename else self._get_attachment_name(resp.headers)
+
+                # Check that a valid and clean file name has been:
+                # - either explicitely provided by the user (overriding server attachment name)
+                # - or extracted from the server HTTP headers
+                if (
+                    output_file in {".", ".."}
+                    or PurePosixPath(output_file).name != output_file
+                    or PureWindowsPath(output_file).name != output_file
+                ):
+                    raise OutputFilePathException(f"{output_file} is not a valid file name")
+
                 # If output_path was not defined, downloaded file will be written in current folder by default
                 output_path: str = os.path.join(output_folder, output_file) if output_folder else output_file
 
@@ -207,8 +220,12 @@ class Client:
         """Fetch the attachment file name returned by the API
         In the content-disposition HTTP header we should find:  attachment; filename=<zip name>
         """
-        matches = re.findall(self._HTTP_HEADERS_FILENAME_REXP, headers.get("content-disposition"))
-        if matches:
+        content_disposition_header = headers.get("content-disposition")
+        matches = re.findall(self._HTTP_HEADERS_FILENAME_REXP, content_disposition_header)
+        # For safety, check that what has been provided in the HTTP header is NOT a path
+        if matches and os.path.basename(matches[0]) == matches[0]:
             return matches[0]
 
-        raise RuntimeError("Could not find filename in the content-disposition header returned by the API")
+        raise OutputFilePathException(
+            f"Could not find a correct filename in the content-disposition header returned by the API: {content_disposition_header}"
+        )

@@ -17,8 +17,8 @@ class MissingApiKeyException(Exception):
     pass
 
 
-class NonexistentFolderException(Exception):
-    """Raised when trying to use an output folder that does not exist"""
+class OutputFilePathException(Exception):
+    """Raised when trying to use an output file path that is incorrect"""
 
     pass
 
